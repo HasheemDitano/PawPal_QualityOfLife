@@ -1,0 +1,842 @@
+@model PetAssessmentViewModel
+@{
+    ViewData["Title"] = "Pet Quality of Life Assessment";
+}
+
+<div class="container position-relative">
+    <div class="row justify-content-center">
+        <div class="col-md-11">
+            <!-- Creative Header Section -->
+            <div class="text-center mb-5">
+                <div class="d-inline-block position-relative">
+                    <h1 class="display-4 mb-3 position-relative">
+                        <span class="heart-pulse">??</span>
+                        Pet Assessment
+                        <span class="paw-bounce">??</span>
+                    </h1>
+                    <p class="lead fs-4">Comprehensive Wellness Evaluation</p>
+                </div>
+            </div>
+
+            <div class="card shadow position-relative">
+                <div class="card-header bg-primary text-white position-relative overflow-hidden">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h2 class="mb-0 d-flex align-items-center">
+                                <span class="icon-container me-3">
+                                    <i class="fas fa-heart text-white fs-1 heartbeat"></i>
+                                </span>
+                                Quality of Life Assessment
+                            </h2>
+                            <p class="mb-0 mt-2 opacity-90">Let's evaluate your pet's wellbeing together</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="assessment-icons">
+                                <span class="assessment-icon">??</span>
+                                <span class="assessment-icon">??</span>
+                                <span class="assessment-icon">??</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body position-relative">
+                    <form asp-action="Assessment" method="post" class="needs-validation assessment-form" novalidate>
+                        @Html.AntiForgeryToken()
+                        
+                        <!-- Pet Information Section -->
+                        <div class="assessment-section" data-section="1">
+                            <div class="section-header mb-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <h4 class="section-title d-flex align-items-center">
+                                            <span class="step-number me-3">1</span>
+                                            <i class="fas fa-paw text-primary me-2 icon-bounce"></i>
+                                            Pet Information
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <div class="section-progress">
+                                            <div class="progress-ring">
+                                                <svg width="40" height="40">
+                                                    <circle cx="20" cy="20" r="18" fill="none" stroke="#e9ecef" stroke-width="3"/>
+                                                    <circle cx="20" cy="20" r="18" fill="none" stroke="var(--primary-orange)" stroke-width="3"
+                                                            stroke-dasharray="113" stroke-dashoffset="85" class="progress-circle"/>
+                                                </svg>
+                                                <span class="progress-text">1/3</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-group-animated">
+                                        <label asp-for="PetName" class="form-label creative-label">
+                                            <i class="fas fa-tag text-primary me-2"></i>
+                                            Pet Name
+                                        </label>
+                                        <input asp-for="PetName" class="form-control creative-input" 
+                                               placeholder="What's your furry friend's name?" />
+                                        <span asp-validation-for="PetName" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-group-animated">
+                                        <label asp-for="PetType" class="form-label creative-label">
+                                            <i class="fas fa-paw text-primary me-2"></i>
+                                            Pet Type
+                                        </label>
+                                        <select asp-for="PetType" class="form-select creative-input pet-type-select">
+                                            <option value="">?? Choose your pet type</option>
+                                            <option value="Dog">?? Dog</option>
+                                            <option value="Cat">?? Cat</option>
+                                            <option value="Bird">?? Bird</option>
+                                            <option value="Rabbit">?? Rabbit</option>
+                                            <option value="Hamster">?? Hamster</option>
+                                            <option value="Guinea Pig">?? Guinea Pig</option>
+                                            <option value="Ferret">?? Ferret</option>
+                                            <option value="Other">?? Other</option>
+                                        </select>
+                                        <span asp-validation-for="PetType" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 mb-4">
+                                    <div class="form-group-animated">
+                                        <label asp-for="PetAge" class="form-label creative-label">
+                                            <i class="fas fa-birthday-cake text-primary me-2"></i>
+                                            Age (years)
+                                        </label>
+                                        <input asp-for="PetAge" class="form-control creative-input" type="number" 
+                                               min="0" max="30" placeholder="0" />
+                                        <span asp-validation-for="PetAge" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 mb-4">
+                                    <div class="form-group-animated">
+                                        <label asp-for="PetBreed" class="form-label creative-label">
+                                            <i class="fas fa-dna text-primary me-2"></i>
+                                            Breed
+                                        </label>
+                                        <input asp-for="PetBreed" class="form-control creative-input" 
+                                               placeholder="e.g., Golden Retriever, Mixed" />
+                                        <span asp-validation-for="PetBreed" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 mb-4">
+                                    <div class="form-group-animated">
+                                        <label asp-for="OwnerName" class="form-label creative-label">
+                                            <i class="fas fa-user text-primary me-2"></i>
+                                            Your Name
+                                        </label>
+                                        <input asp-for="OwnerName" class="form-control creative-input" 
+                                               placeholder="Pet parent's name" />
+                                        <span asp-validation-for="OwnerName" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quality Assessment Section -->
+                        <div class="assessment-section" data-section="2">
+                            <div class="section-header mb-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <h4 class="section-title d-flex align-items-center">
+                                            <span class="step-number me-3">2</span>
+                                            <i class="fas fa-heart-pulse text-primary me-2 pulse-animation"></i>
+                                            Wellness Assessment
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <div class="section-progress">
+                                            <div class="progress-ring">
+                                                <svg width="40" height="40">
+                                                    <circle cx="20" cy="20" r="18" fill="none" stroke="#e9ecef" stroke-width="3"/>
+                                                    <circle cx="20" cy="20" r="18" fill="none" stroke="var(--primary-orange)" stroke-width="3"
+                                                            stroke-dasharray="113" stroke-dashoffset="56" class="progress-circle"/>
+                                                </svg>
+                                                <span class="progress-text">2/3</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="rating-instructions mb-5">
+                                <div class="instruction-card">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 text-center">
+                                            <i class="fas fa-info-circle text-primary fa-3x pulse-slow"></i>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <h5 class="fw-bold mb-2">How to Rate</h5>
+                                            <p class="mb-2">Please rate each category from <strong>1 to 5</strong> based on your observation:</p>
+                                            <div class="rating-legend">
+                                                <span class="legend-item"><strong>1</strong> Very Poor</span>
+                                                <span class="legend-item"><strong>2</strong> Poor</span>
+                                                <span class="legend-item"><strong>3</strong> Fair</span>
+                                                <span class="legend-item"><strong>4</strong> Good</span>
+                                                <span class="legend-item"><strong>5</strong> Excellent</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Pain Level -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="category-card" data-category="pain">
+                                        <div class="category-header">
+                                            <h5 class="category-title">
+                                                <i class="fas fa-band-aid category-icon"></i>
+                                                Pain Management
+                                            </h5>
+                                            <p class="category-subtitle">Lower scores indicate more pain</p>
+                                        </div>
+                                        <div class="rating-container">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <div class="rating-option">
+                                                    <input asp-for="PainLevel" class="rating-input" type="radio" 
+                                                           value="@i" id="pain@(i)" />
+                                                    <label class="rating-label" for="pain@(i)">
+                                                        <span class="rating-number">@i</span>
+                                                        <span class="rating-description">
+                                                            @(i switch {
+                                                                1 => "Severe",
+                                                                2 => "Moderate", 
+                                                                3 => "Mild",
+                                                                4 => "Minimal",
+                                                                5 => "None",
+                                                                _ => ""
+                                                            })
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                        <span asp-validation-for="PainLevel" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Mobility -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="category-card" data-category="mobility">
+                                        <div class="category-header">
+                                            <h5 class="category-title">
+                                                <i class="fas fa-running category-icon"></i>
+                                                Mobility & Movement
+                                            </h5>
+                                            <p class="category-subtitle">Ability to move comfortably</p>
+                                        </div>
+                                        <div class="rating-container">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <div class="rating-option">
+                                                    <input asp-for="Mobility" class="rating-input" type="radio" 
+                                                           value="@i" id="mobility@(i)" />
+                                                    <label class="rating-label" for="mobility@(i)">
+                                                        <span class="rating-number">@i</span>
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                        <span asp-validation-for="Mobility" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Appetite -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="category-card" data-category="appetite">
+                                        <div class="category-header">
+                                            <h5 class="category-title">
+                                                <i class="fas fa-utensils category-icon"></i>
+                                                Appetite & Eating
+                                            </h5>
+                                            <p class="category-subtitle">Interest in food and treats</p>
+                                        </div>
+                                        <div class="rating-container">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <div class="rating-option">
+                                                    <input asp-for="Appetite" class="rating-input" type="radio" 
+                                                           value="@i" id="appetite@(i)" />
+                                                    <label class="rating-label" for="appetite@(i)">
+                                                        <span class="rating-number">@i</span>
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                        <span asp-validation-for="Appetite" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Happiness -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="category-card" data-category="happiness">
+                                        <div class="category-header">
+                                            <h5 class="category-title">
+                                                <i class="fas fa-smile category-icon"></i>
+                                                Happiness & Mood
+                                            </h5>
+                                            <p class="category-subtitle">Overall contentment level</p>
+                                        </div>
+                                        <div class="rating-container">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <div class="rating-option">
+                                                    <input asp-for="Happiness" class="rating-input" type="radio" 
+                                                           value="@i" id="happiness@(i)" />
+                                                    <label class="rating-label" for="happiness@(i)">
+                                                        <span class="rating-number">@i</span>
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                        <span asp-validation-for="Happiness" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Activity Level -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="category-card" data-category="activity">
+                                        <div class="category-header">
+                                            <h5 class="category-title">
+                                                <i class="fas fa-bolt category-icon"></i>
+                                                Activity & Energy
+                                            </h5>
+                                            <p class="category-subtitle">Enthusiasm for activities</p>
+                                        </div>
+                                        <div class="rating-container">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <div class="rating-option">
+                                                    <input asp-for="ActivityLevel" class="rating-input" type="radio" 
+                                                           value="@i" id="activity@(i)" />
+                                                    <label class="rating-label" for="activity@(i)">
+                                                        <span class="rating-number">@i</span>
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                        <span asp-validation-for="ActivityLevel" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Social Interaction -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="category-card" data-category="social">
+                                        <div class="category-header">
+                                            <h5 class="category-title">
+                                                <i class="fas fa-users category-icon"></i>
+                                                Social Engagement
+                                            </h5>
+                                            <p class="category-subtitle">Interaction with family & pets</p>
+                                        </div>
+                                        <div class="rating-container">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <div class="rating-option">
+                                                    <input asp-for="SocialInteraction" class="rating-input" type="radio" 
+                                                           value="@i" id="social@(i)" />
+                                                    <label class="rating-label" for="social@(i)">
+                                                        <span class="rating-number">@i</span>
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                        <span asp-validation-for="SocialInteraction" class="text-danger validation-message"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Notes Section -->
+                        <div class="assessment-section" data-section="3">
+                            <div class="section-header mb-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <h4 class="section-title d-flex align-items-center">
+                                            <span class="step-number me-3">3</span>
+                                            <i class="fas fa-sticky-note text-primary me-2"></i>
+                                            Additional Observations
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <div class="section-progress">
+                                            <div class="progress-ring">
+                                                <svg width="40" height="40">
+                                                    <circle cx="20" cy="20" r="18" fill="none" stroke="#e9ecef" stroke-width="3"/>
+                                                    <circle cx="20" cy="20" r="18" fill="none" stroke="var(--primary-orange)" stroke-width="3"
+                                                            stroke-dasharray="113" stroke-dashoffset="0" class="progress-circle"/>
+                                                </svg>
+                                                <span class="progress-text">3/3</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="notes-container">
+                                <div class="form-group-animated">
+                                    <label asp-for="AdditionalNotes" class="form-label creative-label">
+                                        <i class="fas fa-pencil-alt text-primary me-2"></i>
+                                        Share Your Observations
+                                    </label>
+                                    <textarea asp-for="AdditionalNotes" class="form-control creative-input notes-textarea" 
+                                              rows="5" placeholder="Tell us more about your pet's behavior, habits, or anything else you'd like to share that might help with the assessment..."></textarea>
+                                    <span asp-validation-for="AdditionalNotes" class="text-danger validation-message"></span>
+                                    <div class="character-count">
+                                        <span id="charCount">0</span>/500 characters
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Section -->
+                        <div class="submit-section text-center mt-5">
+                            <div class="submit-container">
+                                <button type="submit" class="btn btn-primary btn-lg submit-btn">
+                                    <span class="btn-content">
+                                        <i class="fas fa-calculator me-2"></i>
+                                        <span class="btn-text">Calculate Quality of Life Score</span>
+                                    </span>
+                                    <div class="btn-loader">
+                                        <div class="spinner"></div>
+                                    </div>
+                                </button>
+                                <p class="submit-note mt-3 text-muted">
+                                    <i class="fas fa-shield-alt me-1"></i>
+                                    Your pet's information is secure and private
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Creative Assessment Form Styles */
+.heart-pulse {
+    animation: heartPulse 2s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.paw-bounce {
+    animation: pawBounce 3s ease-in-out infinite;
+}
+
+@keyframes pawBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.assessment-icons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.assessment-icon {
+    font-size: 1.5rem;
+    animation: iconFloat 4s ease-in-out infinite;
+}
+
+.assessment-icon:nth-child(2) {
+    animation-delay: 1s;
+}
+
+.assessment-icon:nth-child(3) {
+    animation-delay: 2s;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.heartbeat {
+    animation: heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.05); }
+}
+
+.assessment-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 107, 53, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.section-title {
+    font-weight: 800;
+    color: var(--dark-gray);
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-orange), var(--purple-accent));
+    color: white;
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.icon-bounce {
+    animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-3px) rotate(5deg); }
+}
+
+.pulse-animation {
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { 
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px rgba(255, 107, 53, 0.5));
+    }
+    50% { 
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.8));
+    }
+}
+
+.progress-ring {
+    position: relative;
+    display: inline-block;
+}
+
+.progress-circle {
+    transform: rotate(-90deg);
+    transform-origin: center;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary-orange);
+}
+
+.form-group-animated {
+    position: relative;
+}
+
+.creative-label {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.creative-input {
+    transition: all 0.3s ease;
+    border: 3px solid rgba(255, 107, 53, 0.2);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.creative-input:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+    transform: translateY(-2px);
+}
+
+.instruction-card {
+    background: linear-gradient(135deg, rgba(255, 235, 229, 0.8), rgba(254, 247, 244, 0.6));
+    border-radius: 20px;
+    padding: 2rem;
+    border: 2px solid rgba(255, 107, 53, 0.1);
+}
+
+.pulse-slow {
+    animation: pulseSlowGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseSlowGlow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+.rating-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.legend-item {
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 107, 53, 0.1);
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.category-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 235, 229, 0.8));
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 2px solid rgba(255, 107, 53, 0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(255, 107, 53, 0.15);
+    border-color: var(--primary-orange);
+}
+
+.category-header {
+    margin-bottom: 1.5rem;
+}
+
+.category-title {
+    font-weight: 700;
+    color: var(--dark-gray);
+    margin-bottom: 0.5rem;
+}
+
+.category-icon {
+    background: linear-gradient(45deg, var(--primary-orange), var(--purple-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-right: 0.5rem;
+}
+
+.category-subtitle {
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.rating-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.rating-option {
+    flex: 1;
+    text-align: center;
+}
+
+.rating-input {
+    position: absolute;
+    opacity: 0;
+}
+
+.rating-label {
+    display: block;
+    padding: 0.75rem 0.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 107, 53, 0.2);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.rating-number {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--dark-gray);
+}
+
+.rating-description {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--medium-gray);
+    margin-top: 0.25rem;
+}
+
+.rating-input:checked + .rating-label {
+    background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+    color: white;
+    border-color: var(--primary-orange);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+}
+
+.rating-input:checked + .rating-label .rating-number,
+.rating-input:checked + .rating-label .rating-description {
+    color: white;
+}
+
+.rating-label:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.2);
+}
+
+.notes-container {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 2px solid rgba(255, 107, 53, 0.1);
+}
+
+.notes-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.character-count {
+    text-align: right;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--medium-gray);
+}
+
+.submit-section {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(255, 235, 229, 0.8), rgba(254, 247, 244, 0.6));
+    border-radius: 25px;
+    border: 2px solid rgba(255, 107, 53, 0.1);
+}
+
+.submit-btn {
+    position: relative;
+    padding: 1.25rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    min-width: 300px;
+    overflow: hidden;
+}
+
+.btn-content {
+    transition: opacity 0.3s ease;
+}
+
+.btn-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.submit-btn:active .btn-content {
+    opacity: 0;
+}
+
+.submit-btn:active .btn-loader {
+    opacity: 1;
+}
+
+.submit-note {
+    font-size: 0.9rem;
+}
+
+.validation-message {
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .rating-container {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .rating-legend {
+        justify-content: center;
+    }
+    
+    .assessment-icons {
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    
+    .submit-btn {
+        min-width: auto;
+        width: 100%;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Character counter for textarea
+    const textarea = document.querySelector('#AdditionalNotes');
+    const charCount = document.querySelector('#charCount');
+    
+    if (textarea && charCount) {
+        textarea.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
+    }
+    
+    // Form submission animation
+    const form = document.querySelector('.assessment-form');
+    if (form) {
+        form.addEventListener('submit', function() {
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.style.pointerEvents = 'none';
+        });
+    }
+});
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,268 @@
+@model AssessmentResultViewModel
+@{
+    ViewData["Title"] = "Assessment Results";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <!-- Overall Score Card -->
+            <div class="card shadow mb-4">
+                <div class="card-header bg-@Model.ScoreColor text-white">
+                    <h2 class="mb-0">
+                        <i class="fas fa-chart-line text-white me-2"></i>
+                        Quality of Life Assessment Results
+                    </h2>
+                </div>
+                <div class="card-body text-center">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-8">
+                            <h3 class="text-primary mb-2">
+                                <i class="fas fa-paw me-2"></i>
+                                @Model.PetName (@Model.PetType)
+                            </h3>
+                            <p class="text-muted fs-5">@Model.PetBreed, @Model.PetAge years old</p>
+                            <p class="text-muted">Owner: <strong>@Model.OwnerName</strong></p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i>
+                                @Model.AssessmentDate.ToString("MMM dd, yyyy")
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4 mb-4">
+                        <div class="col-md-6">
+                            <div class="score-display">
+                                <div class="display-3 text-@Model.ScoreColor fw-bold">@Model.OverallScore</div>
+                                <p class="text-muted mb-0">Overall Score (out of 5.0)</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="rating-display">
+                                <div class="h2 text-@Model.ScoreColor mb-2">@Model.QualityRating</div>
+                                <p class="text-muted mb-0">Quality Rating</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Category Scores -->
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-chart-bar text-primary me-2"></i>
+                        Category Breakdown
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="category-item">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold d-flex align-items-center">
+                                        <i class="fas fa-band-aid text-primary me-2"></i>
+                                        Pain Level:
+                                    </span>
+                                    <span class="badge bg-@(Model.PainLevel >= 4 ? "success" : Model.PainLevel >= 3 ? "warning" : "danger")">
+                                        @Model.GetPainLevelDescription()
+                                    </span>
+                                </div>
+                                <div class="progress" style="height: 12px;">
+                                    <div class="progress-bar bg-@(Model.PainLevel >= 4 ? "success" : Model.PainLevel >= 3 ? "warning" : "danger")" 
+                                         style="width: @(Model.PainLevel * 20)%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="category-item">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold d-flex align-items-center">
+                                        <i class="fas fa-running text-primary me-2"></i>
+                                        Mobility:
+                                    </span>
+                                    <span class="badge bg-@(Model.Mobility >= 4 ? "success" : Model.Mobility >= 3 ? "warning" : "danger")">
+                                        @Model.GetCategoryDescription(Model.Mobility)
+                                    </span>
+                                </div>
+                                <div class="progress" style="height: 12px;">
+                                    <div class="progress-bar bg-@(Model.Mobility >= 4 ? "success" : Model.Mobility >= 3 ? "warning" : "danger")" 
+                                         style="width: @(Model.Mobility * 20)%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="category-item">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold d-flex align-items-center">
+                                        <i class="fas fa-utensils text-primary me-2"></i>
+                                        Appetite:
+                                    </span>
+                                    <span class="badge bg-@(Model.Appetite >= 4 ? "success" : Model.Appetite >= 3 ? "warning" : "danger")">
+                                        @Model.GetCategoryDescription(Model.Appetite)
+                                    </span>
+                                </div>
+                                <div class="progress" style="height: 12px;">
+                                    <div class="progress-bar bg-@(Model.Appetite >= 4 ? "success" : Model.Appetite >= 3 ? "warning" : "danger")" 
+                                         style="width: @(Model.Appetite * 20)%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="category-item">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold d-flex align-items-center">
+                                        <i class="fas fa-smile text-primary me-2"></i>
+                                        Happiness:
+                                    </span>
+                                    <span class="badge bg-@(Model.Happiness >= 4 ? "success" : Model.Happiness >= 3 ? "warning" : "danger")">
+                                        @Model.GetCategoryDescription(Model.Happiness)
+                                    </span>
+                                </div>
+                                <div class="progress" style="height: 12px;">
+                                    <div class="progress-bar bg-@(Model.Happiness >= 4 ? "success" : Model.Happiness >= 3 ? "warning" : "danger")" 
+                                         style="width: @(Model.Happiness * 20)%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="category-item">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold d-flex align-items-center">
+                                        <i class="fas fa-bolt text-primary me-2"></i>
+                                        Activity Level:
+                                    </span>
+                                    <span class="badge bg-@(Model.ActivityLevel >= 4 ? "success" : Model.ActivityLevel >= 3 ? "warning" : "danger")">
+                                        @Model.GetCategoryDescription(Model.ActivityLevel)
+                                    </span>
+                                </div>
+                                <div class="progress" style="height: 12px;">
+                                    <div class="progress-bar bg-@(Model.ActivityLevel >= 4 ? "success" : Model.ActivityLevel >= 3 ? "warning" : "danger")" 
+                                         style="width: @(Model.ActivityLevel * 20)%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="category-item">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold d-flex align-items-center">
+                                        <i class="fas fa-users text-primary me-2"></i>
+                                        Social Interaction:
+                                    </span>
+                                    <span class="badge bg-@(Model.SocialInteraction >= 4 ? "success" : Model.SocialInteraction >= 3 ? "warning" : "danger")">
+                                        @Model.GetCategoryDescription(Model.SocialInteraction)
+                                    </span>
+                                </div>
+                                <div class="progress" style="height: 12px;">
+                                    <div class="progress-bar bg-@(Model.SocialInteraction >= 4 ? "success" : Model.SocialInteraction >= 3 ? "warning" : "danger")" 
+                                         style="width: @(Model.SocialInteraction * 20)%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-lightbulb text-primary me-2"></i>
+                        Recommendations
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach (var recommendation in Model.GetRecommendations())
+                        {
+                            <div class="col-12 mb-3">
+                                <div class="d-flex align-items-start p-3 rounded-3" style="background: linear-gradient(135deg, var(--warm-cream) 0%, var(--light-orange) 100%);">
+                                    <i class="fas fa-lightbulb text-primary me-3 mt-1"></i>
+                                    <span class="flex-grow-1">@recommendation</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Notes -->
+            @if (!string.IsNullOrEmpty(Model.AdditionalNotes))
+            {
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fas fa-sticky-note text-primary me-2"></i>
+                            Additional Notes
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="p-3 rounded-3" style="background: linear-gradient(135deg, var(--warm-cream) 0%, var(--light-orange) 100%);">
+                            <p class="mb-0 lh-lg">@Model.AdditionalNotes</p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- Action Buttons -->
+            <div class="text-center mb-5">
+                <a asp-action="Assessment" class="btn btn-primary btn-lg me-3 px-4 py-3">
+                    <i class="fas fa-redo me-2"></i>
+                    New Assessment
+                </a>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 py-3">
+                    <i class="fas fa-home me-2"></i>
+                    Back to Home
+                </a>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="alert alert-info">
+                <div class="d-flex align-items-start">
+                    <i class="fas fa-exclamation-triangle text-primary me-3 mt-1 fs-4"></i>
+                    <div>
+                        <strong>Important Disclaimer:</strong> This assessment tool is designed to help you evaluate your pet's quality of life but should not replace professional veterinary advice. 
+                        If you have concerns about your pet's health or wellbeing, please consult with a qualified veterinarian.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .score-display, .rating-display {
+        padding: 1.5rem;
+        border: 2px solid #e9ecef;
+        border-radius: 0.5rem;
+        margin-bottom: 1.5rem;
+        background-color: rgba(233, 236, 239, 0.5);
+    }
+    
+    .category-item {
+        padding: 1rem;
+        background-color: rgba(248, 249, 250, 0.8);
+        border-radius: 0.5rem;
+    }
+    
+    .progress {
+        background-color: #e9ecef;
+    }
+
+    .btn-primary, .btn-outline-secondary {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.125rem;
+    }
+
+    .alert {
+        border-radius: 0.5rem;
+        font-size: 1rem;
+    }
+</style>
