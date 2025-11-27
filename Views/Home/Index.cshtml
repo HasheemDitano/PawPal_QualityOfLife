@@ -2,100 +2,121 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center mb-5">
-    <h1 class="display-4 mb-3">Welcome to PawPal</h1>
-    <p class="lead fs-3">Quality of Life Assessment for Your Beloved Pets</p>
-</div>
-
-<div class="row mt-5">
-    <div class="col-md-10 mx-auto">
-        <div class="card shadow">
-            <div class="card-body text-center py-5">
-                <h3 class="card-title text-primary mb-4">
-                    <i class="fas fa-heart text-danger me-2 fs-1"></i>
-                    Pet Quality of Life Assessment
-                </h3>
-                <p class="card-text fs-5 mb-4 text-muted lh-lg">
-                    Help evaluate your pet's wellbeing with our comprehensive quality of life assessment tool. 
-                    This assessment considers important factors like pain levels, mobility, appetite, happiness, 
-                    activity levels, and social interaction to provide you with valuable insights about your pet's overall quality of life.
-                </p>
-                
-                <div class="row mt-5 mb-4">
-                    <div class="col-md-4 mb-3">
-                        <div class="feature-item text-center">
-                            <i class="fas fa-clipboard-list text-primary fa-3x mb-3"></i>
-                            <h5 class="fw-bold">Comprehensive</h5>
-                            <p class="text-muted mb-0">Covers all key quality of life indicators for a complete assessment</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="feature-item text-center">
-                            <i class="fas fa-chart-bar text-primary fa-3x mb-3"></i>
-                            <h5 class="fw-bold">Visual Results</h5>
-                            <p class="text-muted mb-0">Easy-to-understand scoring and personalized recommendations</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="feature-item text-center">
-                            <i class="fas fa-user-md text-primary fa-3x mb-3"></i>
-                            <h5 class="fw-bold">Professional</h5>
-                            <p class="text-muted mb-0">Based on veterinary quality of life standards and best practices</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-5">
-                    <a asp-action="Assessment" class="btn btn-primary btn-lg px-5 py-3">
-                        <i class="fas fa-paw me-2"></i>
-                        Start Assessment
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-5">
-    <div class="col-md-10 mx-auto">
-        <div class="alert alert-info">
-            <div class="row align-items-center">
-                <div class="col-md-2 text-center">
-                    <i class="fas fa-info-circle text-primary fa-3x"></i>
-                </div>
-                <div class="col-md-10">
-                    <h5 class="fw-bold mb-3">
-                        <i class="fas fa-paw text-primary me-2"></i>
-                        About This Tool
-                    </h5>
-                    <p class="mb-0 lh-lg">
-                        This assessment tool is designed to help pet owners evaluate their pet's quality of life in a structured, comprehensive way. 
-                        While this tool provides valuable insights and personalized recommendations, it should complement—not replace—regular veterinary care and professional advice.
-                        If you have any concerns about your pet's health or wellbeing, always consult with a qualified veterinarian for proper diagnosis and treatment.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-4 mb-5">
-    <div class="col-md-8 mx-auto">
-        <div class="text-center p-4 rounded-3" style="background: linear-gradient(135deg, var(--light-orange) 0%, var(--warm-cream) 100%);">
-            <h5 class="text-primary fw-bold mb-3">
-                <i class="fas fa-heart text-danger me-2"></i>
-                Helping Pets Live Their Best Lives
-            </h5>
-            <p class="text-muted mb-0">
-                Every pet deserves a life filled with comfort, joy, and love. Use our assessment tool to better understand your pet's needs and ensure they're living their happiest, healthiest life possible.
+<div class="hero-section text-center mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h1 class="hero-title mb-4">
+                <span class="hero-main">PawPal Quality of Life</span><br>
+                <span class="hero-highlight">Assessment</span>
+            </h1>
+            <p class="hero-subtitle mb-4">
+                Every pet deserves the best care. Every assessment is a step toward better wellbeing.
             </p>
+            <p class="hero-description mb-5">
+                <span class="text-primary fw-semibold">Discover comprehensive insights</span> 
+                into your pet's health and happiness with our professional assessment tool.
+            </p>
+            
+            <div class="cta-section">
+                <a asp-action="Assessment" class="btn btn-primary btn-lg rounded-pill px-5 py-3 me-3 mb-3">
+                    <i class="fas fa-paw me-2"></i>
+                    Start Assessment
+                </a>
+                <a href="#learn-more" class="btn btn-outline-secondary btn-lg rounded-pill px-4 py-3 mb-3">
+                    Learn More
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
-<style>
-    .feature-item {
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-</style>
+<div id="learn-more" class="features-section">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card text-center h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-clipboard-list fa-3x"></i>
+                        </div>
+                        <h5 class="feature-title">Comprehensive Assessment</h5>
+                        <p class="feature-description">
+                            Evaluate all key aspects of your pet's quality of life including pain, mobility, appetite, and happiness.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card text-center h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-chart-bar fa-3x"></i>
+                        </div>
+                        <h5 class="feature-title">Visual Results</h5>
+                        <p class="feature-description">
+                            Get easy-to-understand scoring with visual progress bars and personalized recommendations.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card text-center h-100">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-user-md fa-3x"></i>
+                        </div>
+                        <h5 class="feature-title">Professional Standards</h5>
+                        <p class="feature-description">
+                            Based on veterinary quality of life standards and best practices for pet healthcare.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="info-section mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="info-card">
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center mb-3 mb-md-0">
+                        <div class="info-icon">
+                            <i class="fas fa-heart fa-3x"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <h4 class="info-title mb-3">
+                            <i class="fas fa-info-circle me-2"></i>
+                            About This Assessment Tool
+                        </h4>
+                        <p class="info-text mb-0">
+                            Our pet quality of life assessment tool helps you evaluate your beloved companion's wellbeing in a structured, 
+                            comprehensive way. While this tool provides valuable insights and personalized recommendations, 
+                            it should complement—not replace—regular veterinary care. If you have concerns about your pet's health, 
+                            always consult with a qualified veterinarian for proper diagnosis and treatment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-cta mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="cta-card text-center">
+                <h4 class="cta-title mb-3">
+                    <i class="fas fa-heart text-danger me-2"></i>
+                    Ready to Help Your Pet Live Their Best Life?
+                </h4>
+                <p class="cta-text mb-4">
+                    Take the first step toward understanding your pet's needs with our comprehensive assessment.
+                </p>
+                <a asp-action="Assessment" class="btn btn-primary btn-lg rounded-pill px-5">
+                    Begin Assessment Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
