@@ -3,233 +3,313 @@
     ViewData["Title"] = "Assessment Results";
 }
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <!-- Overall Score Card -->
-            <div class="card shadow mb-4">
-                <div class="card-header bg-@Model.ScoreColor text-white">
-                    <h2 class="mb-0">
-                        <i class="fas fa-chart-line text-white me-2"></i>
-                        Quality of Life Assessment Results
-                    </h2>
-                </div>
-                <div class="card-body text-center">
-                    <div class="row align-items-center mb-4">
-                        <div class="col-md-8">
-                            <h3 class="text-primary mb-2">
-                                <i class="fas fa-paw me-2"></i>
-                                @Model.PetName (@Model.PetType)
-                            </h3>
-                            <p class="text-muted fs-5">@Model.PetBreed, @Model.PetAge years old</p>
-                            <p class="text-muted">Owner: <strong>@Model.OwnerName</strong></p>
+<div class="results-wrapper">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12">
+                
+                <!-- Results Header -->
+                <div class="results-header">
+                    <div class="header-background">
+                        <div class="floating-shapes">
+                            <div class="shape shape-1"></div>
+                            <div class="shape shape-2"></div>
+                            <div class="shape shape-3"></div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="text-muted">
-                                <i class="fas fa-calendar-alt me-1"></i>
-                                @Model.AssessmentDate.ToString("MMM dd, yyyy")
+                    </div>
+                    <div class="header-content">
+                        <div class="pet-profile">
+                            <div class="pet-avatar-large">
+                                <div class="avatar-ring"></div>
+                                <div class="avatar-content">
+                                    <i class="fas fa-paw"></i>
+                                </div>
+                                <div class="status-indicator status-@Model.ScoreColor"></div>
+                            </div>
+                            <div class="pet-info">
+                                <h1 class="pet-name">@Model.PetName</h1>
+                                <p class="pet-details">@Model.PetType • @Model.PetBreed • @Model.PetAge years old</p>
+                                <p class="owner-info">Owner: <span>@Model.OwnerName</span></p>
                             </div>
                         </div>
+                        
+                        <div class="assessment-date">
+                            <div class="date-card">
+                                <i class="fas fa-calendar-alt"></i>
+                                <div class="date-info">
+                                    <span class="date-label">Assessment Date</span>
+                                    <span class="date-value">@Model.AssessmentDate.ToString("MMMM dd, yyyy")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overall Score Section -->
+                <div class="score-section">
+                    <div class="score-card main-score">
+                        <div class="score-header">
+                            <h2>Overall Quality of Life Score</h2>
+                            <div class="score-badge badge-@Model.ScoreColor">@Model.QualityRating</div>
+                        </div>
+                        
+                        <div class="score-visualization">
+                            <div class="circular-progress" data-score="@Model.OverallScore">
+                                <svg class="progress-ring" width="200" height="200">
+                                    <defs>
+                                        <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color:var(--primary-orange);stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:var(--secondary-orange);stop-opacity:1" />
+                                        </linearGradient>
+                                    </defs>
+                                    <circle class="progress-ring-background" cx="100" cy="100" r="85" />
+                                    <circle class="progress-ring-fill" cx="100" cy="100" r="85" />
+                                </svg>
+                                <div class="score-display">
+                                    <span class="score-number" data-target="@Model.OverallScore">0</span>
+                                    <span class="score-max">/5.0</span>
+                                </div>
+                            </div>
+                            
+                            <div class="score-interpretation">
+                                <div class="interpretation-item">
+                                    <div class="interpretation-icon">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                    <div class="interpretation-text">
+                                        <h4>@Model.QualityRating Quality of Life</h4>
+                                        <p>Based on comprehensive assessment across 6 key areas of wellbeing</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Breakdown -->
+                <div class="categories-section">
+                    <div class="section-header">
+                        <h2>Detailed Category Analysis</h2>
+                        <p>Individual scores for each quality of life indicator</p>
                     </div>
                     
-                    <div class="row mt-4 mb-4">
-                        <div class="col-md-6">
-                            <div class="score-display">
-                                <div class="display-3 text-@Model.ScoreColor fw-bold">@Model.OverallScore</div>
-                                <p class="text-muted mb-0">Overall Score (out of 5.0)</p>
+                    <div class="categories-grid">
+                        <!-- Pain Level -->
+                        <div class="category-card" data-category="pain">
+                            <div class="category-header">
+                                <div class="category-icon pain-icon">
+                                    <i class="fas fa-hand-holding-heart"></i>
+                                </div>
+                                <div class="category-info">
+                                    <h3>Pain Management</h3>
+                                    <p class="category-description">@Model.GetPainLevelDescription()</p>
+                                </div>
+                                <div class="category-score">
+                                    <span class="score-value">@Model.PainLevel</span>
+                                    <span class="score-max">/5</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-modern">
+                                    <div class="progress-fill pain-progress" data-width="@(Model.PainLevel * 20)"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="rating-display">
-                                <div class="h2 text-@Model.ScoreColor mb-2">@Model.QualityRating</div>
-                                <p class="text-muted mb-0">Quality Rating</p>
+
+                        <!-- Mobility -->
+                        <div class="category-card" data-category="mobility">
+                            <div class="category-header">
+                                <div class="category-icon mobility-icon">
+                                    <i class="fas fa-running"></i>
+                                </div>
+                                <div class="category-info">
+                                    <h3>Mobility & Movement</h3>
+                                    <p class="category-description">@Model.GetCategoryDescription(Model.Mobility)</p>
+                                </div>
+                                <div class="category-score">
+                                    <span class="score-value">@Model.Mobility</span>
+                                    <span class="score-max">/5</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-modern">
+                                    <div class="progress-fill mobility-progress" data-width="@(Model.Mobility * 20)"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Appetite -->
+                        <div class="category-card" data-category="appetite">
+                            <div class="category-header">
+                                <div class="category-icon appetite-icon">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <div class="category-info">
+                                    <h3>Appetite & Eating</h3>
+                                    <p class="category-description">@Model.GetCategoryDescription(Model.Appetite)</p>
+                                </div>
+                                <div class="category-score">
+                                    <span class="score-value">@Model.Appetite</span>
+                                    <span class="score-max">/5</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-modern">
+                                    <div class="progress-fill appetite-progress" data-width="@(Model.Appetite * 20)"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Happiness -->
+                        <div class="category-card" data-category="happiness">
+                            <div class="category-header">
+                                <div class="category-icon happiness-icon">
+                                    <i class="fas fa-smile"></i>
+                                </div>
+                                <div class="category-info">
+                                    <h3>Happiness & Mood</h3>
+                                    <p class="category-description">@Model.GetCategoryDescription(Model.Happiness)</p>
+                                </div>
+                                <div class="category-score">
+                                    <span class="score-value">@Model.Happiness</span>
+                                    <span class="score-max">/5</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-modern">
+                                    <div class="progress-fill happiness-progress" data-width="@(Model.Happiness * 20)"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Level -->
+                        <div class="category-card" data-category="activity">
+                            <div class="category-header">
+                                <div class="category-icon activity-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="category-info">
+                                    <h3>Activity & Energy</h3>
+                                    <p class="category-description">@Model.GetCategoryDescription(Model.ActivityLevel)</p>
+                                </div>
+                                <div class="category-score">
+                                    <span class="score-value">@Model.ActivityLevel</span>
+                                    <span class="score-max">/5</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-modern">
+                                    <div class="progress-fill activity-progress" data-width="@(Model.ActivityLevel * 20)"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Interaction -->
+                        <div class="category-card" data-category="social">
+                            <div class="category-header">
+                                <div class="category-icon social-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="category-info">
+                                    <h3>Social Engagement</h3>
+                                    <p class="category-description">@Model.GetCategoryDescription(Model.SocialInteraction)</p>
+                                </div>
+                                <div class="category-score">
+                                    <span class="score-value">@Model.SocialInteraction</span>
+                                    <span class="score-max">/5</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-modern">
+                                    <div class="progress-fill social-progress" data-width="@(Model.SocialInteraction * 20)"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Detailed Category Scores -->
-            <div class="card shadow mb-4">
-                <div class="card-header">
-                    <h4 class="mb-0">
-                        <i class="fas fa-chart-bar text-primary me-2"></i>
-                        Category Breakdown
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 mb-4">
-                            <div class="category-item">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold d-flex align-items-center">
-                                        <i class="fas fa-band-aid text-primary me-2"></i>
-                                        Pain Level:
-                                    </span>
-                                    <span class="badge bg-@(Model.PainLevel >= 4 ? "success" : Model.PainLevel >= 3 ? "warning" : "danger")">
-                                        @Model.GetPainLevelDescription()
-                                    </span>
-                                </div>
-                                <div class="progress" style="height: 12px;">
-                                    <div class="progress-bar bg-@(Model.PainLevel >= 4 ? "success" : Model.PainLevel >= 3 ? "warning" : "danger")" 
-                                         style="width: @(Model.PainLevel * 20)%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-4">
-                            <div class="category-item">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold d-flex align-items-center">
-                                        <i class="fas fa-running text-primary me-2"></i>
-                                        Mobility:
-                                    </span>
-                                    <span class="badge bg-@(Model.Mobility >= 4 ? "success" : Model.Mobility >= 3 ? "warning" : "danger")">
-                                        @Model.GetCategoryDescription(Model.Mobility)
-                                    </span>
-                                </div>
-                                <div class="progress" style="height: 12px;">
-                                    <div class="progress-bar bg-@(Model.Mobility >= 4 ? "success" : Model.Mobility >= 3 ? "warning" : "danger")" 
-                                         style="width: @(Model.Mobility * 20)%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-4">
-                            <div class="category-item">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold d-flex align-items-center">
-                                        <i class="fas fa-utensils text-primary me-2"></i>
-                                        Appetite:
-                                    </span>
-                                    <span class="badge bg-@(Model.Appetite >= 4 ? "success" : Model.Appetite >= 3 ? "warning" : "danger")">
-                                        @Model.GetCategoryDescription(Model.Appetite)
-                                    </span>
-                                </div>
-                                <div class="progress" style="height: 12px;">
-                                    <div class="progress-bar bg-@(Model.Appetite >= 4 ? "success" : Model.Appetite >= 3 ? "warning" : "danger")" 
-                                         style="width: @(Model.Appetite * 20)%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-4">
-                            <div class="category-item">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold d-flex align-items-center">
-                                        <i class="fas fa-smile text-primary me-2"></i>
-                                        Happiness:
-                                    </span>
-                                    <span class="badge bg-@(Model.Happiness >= 4 ? "success" : Model.Happiness >= 3 ? "warning" : "danger")">
-                                        @Model.GetCategoryDescription(Model.Happiness)
-                                    </span>
-                                </div>
-                                <div class="progress" style="height: 12px;">
-                                    <div class="progress-bar bg-@(Model.Happiness >= 4 ? "success" : Model.Happiness >= 3 ? "warning" : "danger")" 
-                                         style="width: @(Model.Happiness * 20)%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-4">
-                            <div class="category-item">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold d-flex align-items-center">
-                                        <i class="fas fa-bolt text-primary me-2"></i>
-                                        Activity Level:
-                                    </span>
-                                    <span class="badge bg-@(Model.ActivityLevel >= 4 ? "success" : Model.ActivityLevel >= 3 ? "warning" : "danger")">
-                                        @Model.GetCategoryDescription(Model.ActivityLevel)
-                                    </span>
-                                </div>
-                                <div class="progress" style="height: 12px;">
-                                    <div class="progress-bar bg-@(Model.ActivityLevel >= 4 ? "success" : Model.ActivityLevel >= 3 ? "warning" : "danger")" 
-                                         style="width: @(Model.ActivityLevel * 20)%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-4">
-                            <div class="category-item">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold d-flex align-items-center">
-                                        <i class="fas fa-users text-primary me-2"></i>
-                                        Social Interaction:
-                                    </span>
-                                    <span class="badge bg-@(Model.SocialInteraction >= 4 ? "success" : Model.SocialInteraction >= 3 ? "warning" : "danger")">
-                                        @Model.GetCategoryDescription(Model.SocialInteraction)
-                                    </span>
-                                </div>
-                                <div class="progress" style="height: 12px;">
-                                    <div class="progress-bar bg-@(Model.SocialInteraction >= 4 ? "success" : Model.SocialInteraction >= 3 ? "warning" : "danger")" 
-                                         style="width: @(Model.SocialInteraction * 20)%"></div>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Recommendations Section -->
+                <div class="recommendations-section">
+                    <div class="section-header">
+                        <h2>Personalized Recommendations</h2>
+                        <p>Expert guidance to improve your pet's quality of life</p>
                     </div>
-                </div>
-            </div>
-
-            <!-- Recommendations -->
-            <div class="card shadow mb-4">
-                <div class="card-header">
-                    <h4 class="mb-0">
-                        <i class="fas fa-lightbulb text-primary me-2"></i>
-                        Recommendations
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
+                    
+                    <div class="recommendations-container">
                         @foreach (var recommendation in Model.GetRecommendations())
                         {
-                            <div class="col-12 mb-3">
-                                <div class="d-flex align-items-start p-3 rounded-3" style="background: linear-gradient(135deg, var(--warm-cream) 0%, var(--light-orange) 100%);">
-                                    <i class="fas fa-lightbulb text-primary me-3 mt-1"></i>
-                                    <span class="flex-grow-1">@recommendation</span>
+                            <div class="recommendation-card">
+                                <div class="recommendation-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="recommendation-content">
+                                    <p>@recommendation</p>
+                                </div>
+                                <div class="recommendation-action">
+                                    <button class="btn-action" onclick="toggleRecommendation(this)">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
                                 </div>
                             </div>
                         }
                     </div>
                 </div>
-            </div>
 
-            <!-- Additional Notes -->
-            @if (!string.IsNullOrEmpty(Model.AdditionalNotes))
-            {
-                <div class="card shadow mb-4">
-                    <div class="card-header">
-                        <h4 class="mb-0">
-                            <i class="fas fa-sticky-note text-primary me-2"></i>
-                            Additional Notes
-                        </h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="p-3 rounded-3" style="background: linear-gradient(135deg, var(--warm-cream) 0%, var(--light-orange) 100%);">
-                            <p class="mb-0 lh-lg">@Model.AdditionalNotes</p>
+                <!-- Additional Notes -->
+                @if (!string.IsNullOrEmpty(Model.AdditionalNotes))
+                {
+                    <div class="notes-section">
+                        <div class="section-header">
+                            <h2>Additional Observations</h2>
+                            <p>Your personal notes about @Model.PetName</p>
+                        </div>
+                        
+                        <div class="notes-card">
+                            <div class="notes-icon">
+                                <i class="fas fa-sticky-note"></i>
+                            </div>
+                            <div class="notes-content">
+                                <p>@Model.AdditionalNotes</p>
+                            </div>
                         </div>
                     </div>
+                }
+
+                <!-- Action Buttons -->
+                <div class="actions-section">
+                    <div class="actions-container">
+                        <a asp-action="Assessment" class="btn btn-primary-action">
+                            <i class="fas fa-redo"></i>
+                            <span>New Assessment</span>
+                        </a>
+                        
+                        <button class="btn btn-secondary-action" onclick="printResults()">
+                            <i class="fas fa-print"></i>
+                            <span>Print Results</span>
+                        </button>
+                        
+                        <button class="btn btn-secondary-action" onclick="shareResults()">
+                            <i class="fas fa-share"></i>
+                            <span>Share Results</span>
+                        </button>
+                        
+                        <a asp-action="Index" class="btn btn-outline-action">
+                            <i class="fas fa-home"></i>
+                            <span>Back to Home</span>
+                        </a>
+                    </div>
                 </div>
-            }
 
-            <!-- Action Buttons -->
-            <div class="text-center mb-5">
-                <a asp-action="Assessment" class="btn btn-primary btn-lg me-3 px-4 py-3">
-                    <i class="fas fa-redo me-2"></i>
-                    New Assessment
-                </a>
-                <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 py-3">
-                    <i class="fas fa-home me-2"></i>
-                    Back to Home
-                </a>
-            </div>
-
-            <!-- Disclaimer -->
-            <div class="alert alert-info">
-                <div class="d-flex align-items-start">
-                    <i class="fas fa-exclamation-triangle text-primary me-3 mt-1 fs-4"></i>
-                    <div>
-                        <strong>Important Disclaimer:</strong> This assessment tool is designed to help you evaluate your pet's quality of life but should not replace professional veterinary advice. 
-                        If you have concerns about your pet's health or wellbeing, please consult with a qualified veterinarian.
+                <!-- Professional Disclaimer -->
+                <div class="disclaimer-section">
+                    <div class="disclaimer-card">
+                        <div class="disclaimer-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="disclaimer-content">
+                            <h4>Important Disclaimer</h4>
+                            <p>This assessment tool provides general guidance based on your observations and should complement, not replace, professional veterinary care. If you have concerns about your pet's health or wellbeing, please consult with a qualified veterinarian for proper diagnosis and treatment.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -237,32 +317,112 @@
     </div>
 </div>
 
-<style>
-    .score-display, .rating-display {
-        padding: 1.5rem;
-        border: 2px solid #e9ecef;
-        border-radius: 0.5rem;
-        margin-bottom: 1.5rem;
-        background-color: rgba(233, 236, 239, 0.5);
-    }
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate score counter
+    animateScore();
     
-    .category-item {
-        padding: 1rem;
-        background-color: rgba(248, 249, 250, 0.8);
-        border-radius: 0.5rem;
-    }
+    // Animate progress bars
+    animateProgressBars();
     
-    .progress {
-        background-color: #e9ecef;
-    }
+    // Animate category cards
+    animateCategoryCards();
+    
+    // Setup intersection observer for animations
+    setupScrollAnimations();
+});
 
-    .btn-primary, .btn-outline-secondary {
-        padding: 0.75rem 1.5rem;
-        font-size: 1.125rem;
-    }
+function animateScore() {
+    const scoreElement = document.querySelector('.score-number');
+    const targetScore = parseFloat(scoreElement.dataset.target);
+    const progressRing = document.querySelector('.progress-ring-fill');
+    const circumference = 2 * Math.PI * 85;
+    
+    progressRing.style.strokeDasharray = circumference;
+    progressRing.style.strokeDashoffset = circumference;
+    
+    let currentScore = 0;
+    const increment = targetScore / 50;
+    
+    const timer = setInterval(() => {
+        currentScore += increment;
+        if (currentScore >= targetScore) {
+            currentScore = targetScore;
+            clearInterval(timer);
+        }
+        
+        scoreElement.textContent = currentScore.toFixed(1);
+        
+        const progress = (currentScore / 5) * circumference;
+        progressRing.style.strokeDashoffset = circumference - progress;
+    }, 40);
+}
 
-    .alert {
-        border-radius: 0.5rem;
-        font-size: 1rem;
+function animateProgressBars() {
+    const progressBars = document.querySelectorAll('.progress-fill');
+    
+    progressBars.forEach((bar, index) => {
+        setTimeout(() => {
+            const width = bar.dataset.width;
+            bar.style.width = width + '%';
+        }, index * 200);
+    });
+}
+
+function animateCategoryCards() {
+    const cards = document.querySelectorAll('.category-card');
+    
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('animate-in');
+        }, index * 150);
+    });
+}
+
+function setupScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    });
+    
+    document.querySelectorAll('.recommendation-card, .notes-card').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+function toggleRecommendation(button) {
+    const card = button.closest('.recommendation-card');
+    card.classList.toggle('expanded');
+    
+    const icon = button.querySelector('i');
+    icon.classList.toggle('fa-chevron-right');
+    icon.classList.toggle('fa-chevron-down');
+}
+
+function printResults() {
+    window.print();
+}
+
+function shareResults() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'Pet Quality of Life Assessment Results',
+            text: `${document.querySelector('.pet-name').textContent} - Quality of Life Score: ${document.querySelector('.score-number').textContent}/5.0`,
+            url: window.location.href
+        });
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        navigator.clipboard.writeText(window.location.href);
+        alert('Results link copied to clipboard!');
     }
-</style>
+}
+</script>
+
+@section Scripts {
+    <script>
+        // Additional animations and interactions can be added here
+    </script>
+}
