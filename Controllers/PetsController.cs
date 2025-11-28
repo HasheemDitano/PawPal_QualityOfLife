@@ -14,7 +14,6 @@ namespace PawPal_QualityOfLife.Controllers
             _context = context;
         }
 
-        // GET: Pets
         public async Task<IActionResult> Index()
         {
             var pets = await _context.Pets
@@ -25,7 +24,6 @@ namespace PawPal_QualityOfLife.Controllers
             return View(pets);
         }
 
-        // GET: Pets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,13 +44,11 @@ namespace PawPal_QualityOfLife.Controllers
             return View(pet);
         }
 
-        // GET: Pets/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Pets/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Type,Age,Breed,OwnerName,OwnerEmail,OwnerPhone")] Pet pet)
@@ -69,7 +65,6 @@ namespace PawPal_QualityOfLife.Controllers
             return View(pet);
         }
 
-        // GET: Pets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,7 +80,6 @@ namespace PawPal_QualityOfLife.Controllers
             return View(pet);
         }
 
-        // POST: Pets/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Type,Age,Breed,OwnerName,OwnerEmail,OwnerPhone,CreatedDate")] Pet pet)
@@ -120,7 +114,6 @@ namespace PawPal_QualityOfLife.Controllers
             return View(pet);
         }
 
-        // GET: Pets/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,7 +133,6 @@ namespace PawPal_QualityOfLife.Controllers
             return View(pet);
         }
 
-        // POST: Pets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -156,7 +148,6 @@ namespace PawPal_QualityOfLife.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Pets/AddAssessment/5
         public async Task<IActionResult> AddAssessment(int? id)
         {
             if (id == null)
@@ -179,7 +170,6 @@ namespace PawPal_QualityOfLife.Controllers
             return View(assessment);
         }
 
-        // POST: Pets/AddAssessment
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddAssessment([Bind("PetId,PainLevel,Mobility,Appetite,Happiness,ActivityLevel,SocialInteraction,AdditionalNotes")] PetAssessment assessment)
@@ -197,7 +187,6 @@ namespace PawPal_QualityOfLife.Controllers
                 return RedirectToAction(nameof(Details), new { id = assessment.PetId });
             }
 
-            // If model state is not valid, reload the pet data
             assessment.Pet = await _context.Pets.FindAsync(assessment.PetId);
             return View(assessment);
         }

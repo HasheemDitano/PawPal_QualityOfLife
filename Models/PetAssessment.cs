@@ -14,7 +14,6 @@ namespace PawPal_QualityOfLife.Models
         [Display(Name = "Assessment Date")]
         public DateTime AssessmentDate { get; set; } = DateTime.Now;
 
-        // Quality of Life Assessment Categories (1-5 scale)
         [Required(ErrorMessage = "Pain level rating is required")]
         [Display(Name = "Pain Level")]
         [Range(1, 5, ErrorMessage = "Pain level must be rated between 1 and 5")]
@@ -56,16 +55,12 @@ namespace PawPal_QualityOfLife.Models
         [StringLength(20)]
         public string QualityRating { get; set; } = string.Empty;
 
-        // Navigation property
         public virtual Pet Pet { get; set; } = null!;
 
-        // Helper methods
         public double CalculateOverallScore()
         {
-            // Pain is reverse scored (5 = no pain = good, 1 = severe pain = bad)
             var adjustedPainScore = 6 - PainLevel;
             
-            // Calculate average of all categories (out of 5)
             var totalScore = adjustedPainScore + Mobility + Appetite + Happiness + ActivityLevel + SocialInteraction;
             return Math.Round((totalScore / 6.0), 2);
         }

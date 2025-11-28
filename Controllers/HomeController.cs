@@ -25,7 +25,6 @@ namespace PawPal_QualityOfLife.Controllers
                 return View(model);
             }
 
-            // Create result view model
             var result = new AssessmentResultViewModel
             {
                 PetName = model.PetName,

@@ -12,7 +12,6 @@ namespace PawPal_QualityOfLife.Models
         public string QualityRating { get; set; } = string.Empty;
         public string ScoreColor { get; set; } = string.Empty;
         
-        // Individual category scores for detailed view
         public int PainLevel { get; set; }
         public int Mobility { get; set; }
         public int Appetite { get; set; }
@@ -23,7 +22,6 @@ namespace PawPal_QualityOfLife.Models
         public string? AdditionalNotes { get; set; }
         public DateTime AssessmentDate { get; set; } = DateTime.Now;
 
-        // Helper methods for display
         public string GetPainLevelDescription()
         {
             return PainLevel switch

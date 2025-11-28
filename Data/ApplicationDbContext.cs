@@ -17,7 +17,6 @@ namespace PawPal_QualityOfLife.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure Pet entity
             modelBuilder.Entity<Pet>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -31,7 +30,6 @@ namespace PawPal_QualityOfLife.Data
                 entity.Property(e => e.LastUpdated).HasDefaultValueSql("GETDATE()");
             });
 
-            // Configure PetAssessment entity
             modelBuilder.Entity<PetAssessment>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -40,14 +38,12 @@ namespace PawPal_QualityOfLife.Data
                 entity.Property(e => e.QualityRating).HasMaxLength(20);
                 entity.Property(e => e.OverallScore).HasPrecision(4, 2);
 
-                // Configure relationship
                 entity.HasOne(e => e.Pet)
                       .WithMany(p => p.Assessments)
                       .HasForeignKey(e => e.PetId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // Seed some sample data
             modelBuilder.Entity<Pet>().HasData(
                 new Pet
                 {

@@ -47,7 +47,6 @@ namespace PawPal_QualityOfLife.Models
         [Display(Name = "Last Updated")]
         public DateTime LastUpdated { get; set; } = DateTime.Now;
 
-        // Navigation property for assessments
         public virtual ICollection<PetAssessment> Assessments { get; set; } = new List<PetAssessment>();
     }
 }

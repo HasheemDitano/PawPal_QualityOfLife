@@ -28,8 +28,6 @@ namespace PawPal_QualityOfLife.Models
         [StringLength(100, ErrorMessage = "Owner name cannot exceed 100 characters")]
         public string OwnerName { get; set; } = string.Empty;
 
-        // Quality of Life Assessment Categories (1-5 scale)
-        
         [Required(ErrorMessage = "Pain level rating is required")]
         [Display(Name = "Pain Level")]
         [Range(1, 5, ErrorMessage = "Pain level must be rated between 1 and 5")]
@@ -62,13 +60,10 @@ namespace PawPal_QualityOfLife.Models
         [StringLength(500, ErrorMessage = "Additional notes cannot exceed 500 characters")]
         public string? AdditionalNotes { get; set; }
 
-        // Helper method to calculate overall score
         public double CalculateOverallScore()
         {
-            // Pain is reverse scored (5 = no pain = good, 1 = severe pain = bad)
             var adjustedPainScore = 6 - PainLevel;
             
-            // Calculate average of all categories (out of 5)
             var totalScore = adjustedPainScore + Mobility + Appetite + Happiness + ActivityLevel + SocialInteraction;
             return Math.Round((totalScore / 6.0), 2);
         }
