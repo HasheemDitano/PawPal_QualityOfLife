@@ -1,0 +1,102 @@
+@model PawPal_QualityOfLife.Models.Pet
+
+@{
+    ViewData["Title"] = "Delete Pet";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> Delete Pet: @Model.Name
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Warning:</strong> You are about to permanently delete this pet and all associated assessment records. This action cannot be undone.
+                    </div>
+
+                    <h5>Pet Information</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.Name):</strong>
+                                <p class="mb-1">@Model.Name</p>
+                            </div>
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.Type):</strong>
+                                <p class="mb-1"><span class="badge bg-info">@Model.Type</span></p>
+                            </div>
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.Age):</strong>
+                                <p class="mb-1">@Model.Age years old</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.Breed):</strong>
+                                <p class="mb-1">@Model.Breed</p>
+                            </div>
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.OwnerName):</strong>
+                                <p class="mb-1">@Model.OwnerName</p>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Assessment Records:</strong>
+                                <p class="mb-1">
+                                    <span class="badge bg-secondary">@Model.Assessments.Count</span>
+                                    @if (Model.Assessments.Count > 0)
+                                    {
+                                        <span class="text-warning">assessment(s) will be deleted</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.Assessments.Any())
+                    {
+                        <h6 class="mt-4">Assessment History to be Deleted:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Overall Score</th>
+                                        <th>Quality Rating</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var assessment in Model.Assessments.OrderByDescending(a => a.AssessmentDate))
+                                    {
+                                        <tr>
+                                            <td>@assessment.AssessmentDate.ToString("MMM dd, yyyy")</td>
+                                            <td>@assessment.OverallScore/5.0</td>
+                                            <td>
+                                                <span class="badge bg-@assessment.GetScoreColor()">
+                                                    @assessment.QualityRating
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+
+                    <form asp-action="Delete" class="d-flex justify-content-between mt-4">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you absolutely sure you want to delete this pet and all assessment records? This action cannot be undone.')">
+                            <i class="fas fa-trash"></i> Yes, Delete Pet
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,242 @@
+@model PawPal_QualityOfLife.Models.PetAssessment
+
+@{
+    ViewData["Title"] = "Add Assessment";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-clipboard-check"></i> Quality of Life Assessment for @Model.Pet.Name
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="alert alert-info">
+                                <strong>Pet:</strong> @Model.Pet.Name (@Model.Pet.Type, @Model.Pet.Age years)<br>
+                                <strong>Owner:</strong> @Model.Pet.OwnerName
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-light">
+                                <small>
+                                    <strong>Rating Scale:</strong><br>
+                                    1 = Poor/Severe &nbsp;&nbsp; 3 = Moderate &nbsp;&nbsp; 5 = Excellent/None<br>
+                                    <em>Note: For pain, 1 = severe pain, 5 = no pain</em>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form asp-action="AddAssessment">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="PetId" />
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">Physical Health</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label asp-for="PainLevel" class="form-label">
+                                                @Html.DisplayNameFor(model => model.PainLevel)
+                                                <small class="text-muted">(1 = Severe Pain, 5 = No Pain)</small>
+                                            </label>
+                                            <select asp-for="PainLevel" class="form-select">
+                                                <option value="1">1 - Severe Pain</option>
+                                                <option value="2">2 - Moderate Pain</option>
+                                                <option value="3">3 - Mild Pain</option>
+                                                <option value="4">4 - Minimal Pain</option>
+                                                <option value="5">5 - No Pain</option>
+                                            </select>
+                                            <span asp-validation-for="PainLevel" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label asp-for="Mobility" class="form-label">
+                                                @Html.DisplayNameFor(model => model.Mobility)
+                                                <small class="text-muted">(1 = Very Limited, 5 = Excellent)</small>
+                                            </label>
+                                            <select asp-for="Mobility" class="form-select">
+                                                <option value="1">1 - Very Limited</option>
+                                                <option value="2">2 - Limited</option>
+                                                <option value="3">3 - Moderate</option>
+                                                <option value="4">4 - Good</option>
+                                                <option value="5">5 - Excellent</option>
+                                            </select>
+                                            <span asp-validation-for="Mobility" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label asp-for="Appetite" class="form-label">
+                                                @Html.DisplayNameFor(model => model.Appetite)
+                                                <small class="text-muted">(1 = No Appetite, 5 = Excellent)</small>
+                                            </label>
+                                            <select asp-for="Appetite" class="form-select">
+                                                <option value="1">1 - No Appetite</option>
+                                                <option value="2">2 - Poor Appetite</option>
+                                                <option value="3">3 - Fair Appetite</option>
+                                                <option value="4">4 - Good Appetite</option>
+                                                <option value="5">5 - Excellent Appetite</option>
+                                            </select>
+                                            <span asp-validation-for="Appetite" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">Mental & Social Wellbeing</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label asp-for="Happiness" class="form-label">
+                                                @Html.DisplayNameFor(model => model.Happiness)
+                                                <small class="text-muted">(1 = Very Sad, 5 = Very Happy)</small>
+                                            </label>
+                                            <select asp-for="Happiness" class="form-select">
+                                                <option value="1">1 - Very Sad/Depressed</option>
+                                                <option value="2">2 - Sad</option>
+                                                <option value="3">3 - Neutral</option>
+                                                <option value="4">4 - Happy</option>
+                                                <option value="5">5 - Very Happy</option>
+                                            </select>
+                                            <span asp-validation-for="Happiness" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label asp-for="ActivityLevel" class="form-label">
+                                                @Html.DisplayNameFor(model => model.ActivityLevel)
+                                                <small class="text-muted">(1 = Inactive, 5 = Very Active)</small>
+                                            </label>
+                                            <select asp-for="ActivityLevel" class="form-select">
+                                                <option value="1">1 - Inactive</option>
+                                                <option value="2">2 - Low Activity</option>
+                                                <option value="3">3 - Moderate Activity</option>
+                                                <option value="4">4 - Active</option>
+                                                <option value="5">5 - Very Active</option>
+                                            </select>
+                                            <span asp-validation-for="ActivityLevel" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label asp-for="SocialInteraction" class="form-label">
+                                                @Html.DisplayNameFor(model => model.SocialInteraction)
+                                                <small class="text-muted">(1 = Withdrawn, 5 = Very Social)</small>
+                                            </label>
+                                            <select asp-for="SocialInteraction" class="form-select">
+                                                <option value="1">1 - Withdrawn</option>
+                                                <option value="2">2 - Limited Social</option>
+                                                <option value="3">3 - Moderate Social</option>
+                                                <option value="4">4 - Social</option>
+                                                <option value="5">5 - Very Social</option>
+                                            </select>
+                                            <span asp-validation-for="SocialInteraction" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h6 class="mb-0">Additional Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label asp-for="AdditionalNotes" class="form-label"></label>
+                                    <textarea asp-for="AdditionalNotes" class="form-control" rows="3" placeholder="Any additional observations or notes about your pet's current condition..."></textarea>
+                                    <span asp-validation-for="AdditionalNotes" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Details" asp-route-id="@Model.PetId" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to Pet Details
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Save Assessment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Real-time score calculation (optional enhancement)
+        function calculateScore() {
+            const pain = parseInt(document.getElementById('PainLevel').value) || 1;
+            const mobility = parseInt(document.getElementById('Mobility').value) || 1;
+            const appetite = parseInt(document.getElementById('Appetite').value) || 1;
+            const happiness = parseInt(document.getElementById('Happiness').value) || 1;
+            const activity = parseInt(document.getElementById('ActivityLevel').value) || 1;
+            const social = parseInt(document.getElementById('SocialInteraction').value) || 1;
+            
+            const adjustedPain = 6 - pain;
+            const totalScore = adjustedPain + mobility + appetite + happiness + activity + social;
+            const overallScore = (totalScore / 6.0).toFixed(2);
+            
+            let rating = '';
+            let colorClass = '';
+            if (overallScore >= 4.0) {
+                rating = 'Excellent';
+                colorClass = 'success';
+            } else if (overallScore >= 3.5) {
+                rating = 'Good';
+                colorClass = 'info';
+            } else if (overallScore >= 3.0) {
+                rating = 'Fair';
+                colorClass = 'warning';
+            } else if (overallScore >= 2.5) {
+                rating = 'Poor';
+                colorClass = 'danger';
+            } else {
+                rating = 'Very Poor';
+                colorClass = 'dark';
+            }
+            
+            // Update preview if exists
+            const preview = document.getElementById('score-preview');
+            if (preview) {
+                preview.innerHTML = `
+                    <strong>Current Score:</strong> ${overallScore}/5.0 
+                    <span class="badge bg-${colorClass}">${rating}</span>
+                `;
+            }
+        }
+        
+        // Add event listeners to all select elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const selects = document.querySelectorAll('select[asp-for]');
+            selects.forEach(select => {
+                select.addEventListener('change', calculateScore);
+            });
+            
+            // Add score preview area
+            const form = document.querySelector('form');
+            if (form) {
+                const previewDiv = document.createElement('div');
+                previewDiv.className = 'alert alert-light mt-3';
+                previewDiv.innerHTML = '<div id="score-preview"><em>Select ratings to see preview score</em></div>';
+                form.insertBefore(previewDiv, form.lastElementChild);
+            }
+            
+            calculateScore(); // Initial calculation
+        });
+    </script>
+}

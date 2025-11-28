@@ -1,0 +1,169 @@
+@model PawPal_QualityOfLife.Models.Pet
+
+@{
+    ViewData["Title"] = "Pet Details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-paw"></i> @Model.Name's Profile
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.Name):</strong>
+                                <p class="mb-1">@Model.Name</p>
+                            </div>
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.Type):</strong>
+                                <p class="mb-1"><span class="badge bg-info">@Model.Type</span></p>
+                            </div>
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.Age):</strong>
+                                <p class="mb-1">@Model.Age years old</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.Breed):</strong>
+                                <p class="mb-1">@Model.Breed</p>
+                            </div>
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.CreatedDate):</strong>
+                                <p class="mb-1">@Model.CreatedDate.ToString("MMMM dd, yyyy")</p>
+                            </div>
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.LastUpdated):</strong>
+                                <p class="mb-1">@Model.LastUpdated.ToString("MMMM dd, yyyy")</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <h5 class="mb-3">
+                        <i class="fas fa-user"></i> Owner Information
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.OwnerName):</strong>
+                                <p class="mb-1">@Model.OwnerName</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.OwnerEmail):</strong>
+                                <p class="mb-1">
+                                    @if (!string.IsNullOrEmpty(Model.OwnerEmail))
+                                    {
+                                        <a href="mailto:@Model.OwnerEmail">@Model.OwnerEmail</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not provided</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <strong>@Html.DisplayNameFor(model => model.OwnerPhone):</strong>
+                                <p class="mb-1">
+                                    @if (!string.IsNullOrEmpty(Model.OwnerPhone))
+                                    {
+                                        <a href="tel:@Model.OwnerPhone">@Model.OwnerPhone</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not provided</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                            <i class="fas fa-edit"></i> Edit Pet
+                        </a>
+                        <a asp-action="AddAssessment" asp-route-id="@Model.Id" class="btn btn-success">
+                            <i class="fas fa-clipboard-check"></i> New Assessment
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-line"></i> Assessment History
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Assessments.Any())
+                    {
+                        <div class="assessment-history">
+                            @foreach (var assessment in Model.Assessments.OrderByDescending(a => a.AssessmentDate))
+                            {
+                                <div class="assessment-item mb-3 p-3 border rounded">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <strong>@assessment.AssessmentDate.ToString("MMM dd, yyyy")</strong>
+                                        <span class="badge bg-@assessment.GetScoreColor()">@assessment.QualityRating</span>
+                                    </div>
+                                    <div class="row text-sm">
+                                        <div class="col-6">
+                                            <small class="text-muted">Overall Score:</small><br>
+                                            <strong>@assessment.OverallScore/5.0</strong>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted">Categories:</small><br>
+                                            <small>
+                                                Pain: @(6 - assessment.PainLevel)/5,
+                                                Mobility: @assessment.Mobility/5,
+                                                Appetite: @assessment.Appetite/5
+                                            </small>
+                                        </div>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(assessment.AdditionalNotes))
+                                    {
+                                        <div class="mt-2">
+                                            <small class="text-muted">Notes:</small>
+                                            <p class="mb-0 small">@assessment.AdditionalNotes</p>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-3">
+                            <i class="fas fa-clipboard-list fa-3x text-muted mb-2"></i>
+                            <p class="text-muted mb-0">No assessments yet</p>
+                            <small class="text-muted">Start by adding the first quality of life assessment.</small>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PawPal_QualityOfLife.styles.css" asp-append-version="true" />
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
     <header>
@@ -24,20 +26,34 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")" 
-                               asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")" 
+                               asp-area="" asp-controller="Home" asp-action="Index">
+                               <i class="fas fa-home"></i> Home
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Assessment" ? "active" : "")" 
-                               asp-area="" asp-controller="Home" asp-action="Assessment">Pet Assessment</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Pets" ? "active" : "")" 
+                               asp-area="" asp-controller="Pets" asp-action="Index">
+                               <i class="fas fa-paw"></i> My Pets
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Privacy" ? "active" : "")" 
-                               asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["Action"]?.ToString() == "Assessment" ? "active" : "")" 
+                               asp-area="" asp-controller="Home" asp-action="Assessment">
+                               <i class="fas fa-clipboard-check"></i> Quick Assessment
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["Action"]?.ToString() == "Privacy" ? "active" : "")" 
+                               asp-area="" asp-controller="Home" asp-action="Privacy">
+                               <i class="fas fa-shield-alt"></i> Privacy
+                            </a>
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <a href="#" class="btn btn-primary btn-sm rounded-pill px-3">Get Started</a>
+                        <a asp-controller="Pets" asp-action="Create" class="btn btn-primary btn-sm rounded-pill px-3">
+                            <i class="fas fa-plus"></i> Add Pet
+                        </a>
                     </div>
                 </div>
             </div>
@@ -53,10 +69,12 @@
         <div class="container py-4">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <span>&copy; 2025 - PawPal QualityOfLife</span>
+                    <span>&copy; 2025 - PawPal QualityOfLife - <i class="fas fa-heart text-danger"></i> Pet Care Management</span>
                 </div>
                 <div class="col-md-6 text-end">
-                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none">Privacy Policy</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none">
+                        <i class="fas fa-shield-alt"></i> Privacy Policy
+                    </a>
                 </div>
             </div>
         </div>
